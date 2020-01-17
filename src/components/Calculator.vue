@@ -1,9 +1,9 @@
 <template>
   <div class="calculator">
     <div class="display">{{current || '0'}}</div>
-    <div @click="clear" class="btn">C</div> <!-- creates a click callback with the function 'clear'. Define function in script -->
-    <div @click="sign" class="btn">+/-</div>
-    <div @click="percent" class="btn">%</div>
+    <div @click="clear" class="btn top">C</div> <!-- creates a click callback with the function 'clear'. Define function in script -->
+    <div @click="sign" class="btn top">+/-</div>
+    <div @click="percent" class="btn top">%</div>
     <div @click="divide" class="btn operator">÷</div>
     <div @click="append('7')" class="btn">7</div>
     <div @click="append('8')" class="btn">8</div>
@@ -19,7 +19,7 @@
     <div @click="add" class="btn operator">+</div>
     <div @click="append('0')" class="btn zero">0</div>
     <div @click="dot" class="btn">.</div>
-    <div @click="equal" class="btn operator">=</div>
+    <div @click="equal" class="btn operator equal">=</div>
   </div>
 </template>
 
@@ -69,7 +69,7 @@
         this.setPrevious();
       },
       minus() {
-        this.operator = (a, b) => b - a;
+        this.operator = (a, b) => a - b;
         this.setPrevious();
       },
       add() {
@@ -78,8 +78,8 @@
       },
       equal() {
         this.current = `${this.operator(
-          parseFloat(this.current),
-          parseFloat(this.previous)
+          parseFloat(this.previous),
+          parseFloat(this.current)
         )}`;
         this.previous = null;
       }
@@ -92,18 +92,30 @@
 <style scoped>
 
 .calculator {
-  width: 400px;
+  background-color: #232323;;
+  width: 250px;
+  height: 420px;
   margin: 0 auto;
-  font-size: 40px;
+  font-size: 28px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);/* container with 4 columns even in width */
   grid-auto-rows: minmax(50px, auto);
+  padding: 24px;
+  border-radius: 16px;
 }
 
 .display {
+  height: 150px;
+  margin-bottom: 16px;
+  margin-right: 8px;
+  font-size: 54px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex-wrap: wrap;
   grid-column: 1 / 5; /* start at column and end after column 5 */
-  background-color: #000;
   color: #fff;
+  border-bottom: 1px solid #fff;
 }
 
 .zero {
@@ -111,14 +123,25 @@
 }
 
 .btn {
-  background-color: #eee;
-  border: 1px solid #999;
+  /* border: 1px solid #999; */
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  margin: 6px;
+  border-radius: 8px;
 }
 
-.operator {
-  background-color: orange;
-  color: #fff;
+.operator,
+.top {
+  color: #999999;
+  border: none;
+  font-weight: 600;
+}
+
+.equal {
+  color: #f79726;
 }
 
 </style>
